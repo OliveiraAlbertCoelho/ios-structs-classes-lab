@@ -29,6 +29,21 @@ Will these three lines of code run? If not, why not?
 fred.name = "Brick"
 fred.weight = 999.2
 fred.homePlanet = "Mars"
+
+Ans: fred.homePlanet = "Mars" will not run because it is a constant.
+```
+```swift
+class Giant {
+var name: String
+var weight: Double
+var homePlanet: String
+
+init(name: String, weight: Double, homePlanet: String) {
+self.name = name
+self.weight = weight
+self.homePlanet = homePlanet
+}
+}
 ```
 
 Fix the class definition for `Giant` in the space below so that it **does** work:
@@ -53,10 +68,18 @@ Will these three lines of code run? If so, why not?
 bilbo.name = "Jake"
 bilbo.height = 1.42
 bilbo.homePlanet = "Saturn"
+Ans: because of the declaration of bilbo is a let and cannot change it will not run
 ```
 
 Change the declaration of `bilbo` so that the above three lines of code **do** work:
-
+```swift
+struct Alien {
+var name: String
+var height: Double
+var homePlanet: String
+}
+var bilbo = Alien(name: "Bilbo", height: 1.67, homePlanet: "Venus")
+```
 
 ## Question 3
 
@@ -69,8 +92,8 @@ jason.name = "Jason"
 ```
 
 What will the value of `edgar.name` be after those three lines of code are run? What will the value of `jason.name` be? Why?
-
-
+```both will have the value of edgar because when we declared the constant edgar we gave him the name of edgar and then passed thos values to jason
+```
 ## Question 4
 
 Given this bit of code that uses the `Alien` struct:
@@ -82,7 +105,7 @@ charlesFromJupiter.homePlanet = "Jupiter"
 ```
 
 What will the value of `charles.homePlanet` be after the above code run? What about the value of `charlesFromJupiter.homePlanet`? Why?
-
+charles.homePlanet would be Pluto and charlesFromJupiter.homePlanet will be Jupiter.  Because charlesFromJupiter copied the values from charles and then changed its value to Jupiter meanwhile charles.pluto value stays the same.
 
 ## Question 5
 
@@ -114,9 +137,31 @@ var joeAccount = BankAccount(owner: "Joe", balance: 100.0)
 var joeOtherAccount = joeAccount
 joeAccount.withdraw(50.0)
 ```
+```swift 
+//fixes from both a and b
+struct BankAccount {
+var owner: String
+var balance: Double
+
+
+mutating func deposit( amount: Double) {
+self.balance += amount
+}
+
+mutating func withdraw( amount: Double) {
+self.balance -= amount
+}
+}
+
+var joeAccount = BankAccount(owner: "Joe", balance: 100.0)
+var joeOtherAccount = joeAccount
+joeAccount.withdraw(amount: 50.0)
+print(joeAccount.balance)
+```
 
 What will the value of `joeAccount.balance` be after the above code runs? What about the value of `joeOtherAccount.balance`? Why?
 
+ans:  joeAccount.balance will be $50 and joeOtherAccount.balance will be 100. This is because we only changed the value in joeAccount and not on joeOther 
 
 ## Question 6
 
@@ -124,7 +169,30 @@ a. Write a struct called `Person` that has 3 properties of type `String`: a firs
 
 
 b. Write a method in `Person` called `fullName` that will return a formatted string of an instance's full name. Call this method on both the instances you created in part a.
+```swift
+struct Person {
+var firstName: String
+var lastName: String
+var middleName: String?
 
+func FullName() -> String {
+var fullName = ""
+if let a = middleName{
+fullName += firstName + " " + a + " " + lastName}
+else {
+fullName += firstName + " " + lastName
+}
+return fullName
+}
+}
+var person1 = Person(firstName: "Albert", lastName: "Olivera", middleName: "Coelho")
+var person2 = Person(firstName: "John", lastName: "Coelho", middleName: nil)
+print(person1.firstName)
+
+print(person2.FullName())
+
+
+```
 
 ## Question 7
 
@@ -132,7 +200,26 @@ a. Create a class called `Book` that has properties `title`, `author` and `ratin
 
 
 b. Add a method to `Book` called `isGood` that returns `true` if its rating is greater than or equal to 7
+```swift
+class Book {
+var title, author: String
+var rating: Double
+init(title: String, author: String , rating:Double) {
+self.title = title
+self.author = author
+self.rating = rating
+}
+func rateThis () -> Bool {
+if rating > 7 {
+return true
+}
+return false
+}
+}
+var myBook = Book.init(title: "A Game Thrones", author: "grrm" , rating: 8)
+print(myBook.rateThis())
 
+```
 
 ## Question 8
 
@@ -153,6 +240,20 @@ dog1.breed //returns "unknown"
 dog1.mood //returns "calm"
 dog1.hungry //returns false
 ```
+```swift
+class Dog {
+var name: String = "dog" , breed: String = "unknown" , mood: String = "calm"
+var hungry: Bool = false
+
+
+}
+var dog1 = Dog()
+dog1.name //returns "dog"
+dog1.breed //returns "unknown"
+dog1.mood //returns "calm"
+dog1.hungry //returns false
+
+```
 
 b. Add an `init` method so that you can initialize new dogs with values for name, breed, mood, and hungry. It should still have the same default values for these properties
 
@@ -162,6 +263,26 @@ dog2.name //returns "Oreo"
 dog2.breed //returns "English Setter"
 dog2.mood //returns 'excited'
 dog2.hungry //returns true
+```
+```swift
+class Dog {
+var name: String = "dog" , breed: String = "unknown" , mood: String = "calm"
+var hungry: Bool = false
+init(name: String, breed: String , mood: String , hungry: Bool){
+self.name = name
+self.breed = breed
+self.mood = mood
+self.hungry = hungry
+}
+
+}
+
+var dog2 = Dog(name: "Oreo", breed: "English Setter", mood: "excited", hungry: true)
+dog2.name //returns "Oreo"
+dog2.breed //returns "English Setter"
+dog2.mood //returns 'excited'
+dog2.hungry //returns true
+
 ```
 
 c. Add an instance method called `playFetch()`. It should set the dog's `hungry` property to `true`, set its mood property to `playful`, and print "Ruff!"
@@ -174,6 +295,30 @@ dog3.playFetch() //prints "Ruff!"
 dog3.hungry //returns true
 dog3.mood //returns "playful"
 ```
+```swift
+class Dog {
+var name: String = "dog" , breed: String = "unknown" , mood: String = "calm"
+var hungry: Bool = false
+init(name: String, breed: String , mood: String , hungry: Bool){
+self.name = name
+self.breed = breed
+self.mood = mood
+self.hungry = hungry
+}
+func playFecth() {
+self.mood = "playful"
+self.hungry = true
+print("Ruff")
+}}
+
+var dog2 = Dog(name: "Oreo", breed: "English Setter", mood: "excited", hungry: true)
+var dog3 = Dog(name: "Rhett", breed: "English Setter", mood: "excited", hungry: false)
+print(dog3.hungry) //returns false
+print(dog3.mood) //returns "excited"
+print(dog3.playFecth())//prints "Ruff!"
+print(dog3.hungry) //returns true
+print(dog3.mood)//returns "playful"
+```
 
 d. Add an instance method called `feed()`. If the dog is hungry, it should set `hungry` to `false` and print "Woof!" If the dog is not hungry, it should print "The dog doesn't look hungry"
 
@@ -182,6 +327,40 @@ var dog4 = Dog(name: "Partner", breed: "Golden Retriever", mood: "thoughtful", h
 dog4.hungry //returns true
 dog4.feed() //prints "Woof!"
 dog4.hungry //returns false
+```
+```swift
+class Dog {
+var name: String = "dog" , breed: String = "unknown" , mood: String = "calm"
+var hungry: Bool = false
+init(name: String, breed: String , mood: String , hungry: Bool){
+self.name = name
+self.breed = breed
+self.mood = mood
+self.hungry = hungry
+}
+func playFecth() {
+self.mood = "playful"
+self.hungry = true
+print("Ruff")
+}
+func feed(){
+if self.hungry {
+self.hungry = false
+print("Woof!")
+}else {
+print("The dog doesn't look hungry")
+}
+}
+}
+
+var dog2 = Dog(name: "Oreo", breed: "English Setter", mood: "excited", hungry: true)
+var dog3 = Dog(name: "Rhett", breed: "English Setter", mood: "excited", hungry: false)
+var dog4 = Dog(name: "Partner", breed: "Golden Retriever", mood: "thoughtful", hungry: true)
+print(dog4.hungry) //returns true
+print(dog4.feed()) //prints "Woof!"
+print(dog4.hungry) //returns false
+
+
 ```
 
 e. Add an instance method called `toString` that returns a `String` type description of the dog:
@@ -237,6 +416,25 @@ let colorDictArray: [[String: Double]] = [["red": 1.0, "green": 0.0, "blue": 0.0
  ["red": 0.6, "green": 0.9, "blue": 0.0],
  ["red": 0.2, "green": 0.2, "blue": 0.5],
  ["red": 0.5, "green": 0.1, "blue": 0.9],]
+```
+```swift
+let colorDictArray: [[String: Double]] = [["red": 1.0, "green": 0.0, "blue": 0.0],
+["red": 0.0, "green": 1.0, "blue": 0.0],
+["red": 0.0, "green": 0.0, "blue": 1.0],
+["red": 0.6, "green": 0.9, "blue": 0.0],
+["red": 0.2, "green": 0.2, "blue": 0.5],
+["red": 0.5, "green": 0.1, "blue": 0.9],]
+
+struct RGBColor {
+var red: Double
+var green: Double
+var blue: Double
+}
+var rgbArray = [RGBColor]()
+for dict in colorDictArray {
+rgbArray.append(RGBColor(red: dict["red"]!,green: dict["green"]!, blue: dict["blue"]!))
+}
+print(rgbArray[0])
 ```
 
 
