@@ -373,6 +373,45 @@ print(dog5.toString())
 //Breed: Golden Retriever
 //Mood: feeling pawesome
 ```
+```swift
+class Dog {
+var name: String = "dog" , breed: String = "unknown" , mood: String = "calm"
+var hungry: Bool = false
+init(name: String, breed: String , mood: String , hungry: Bool){
+self.name = name
+self.breed = breed
+self.mood = mood
+self.hungry = hungry
+}
+func playFecth() {
+self.mood = "playful"
+self.hungry = true
+print("Ruff")
+}
+func feed(){
+if self.hungry {
+self.hungry = false
+print("Woof!")
+}else {
+print("The dog doesn't look hungry")
+}
+}
+func toString() -> String {
+return "Name: \(self.name)\nBreed: \(self.breed)\nMood: \(self.mood)"
+}
+}
+
+var dog2 = Dog(name: "Oreo", breed: "English Setter", mood: "excited", hungry: true)
+var dog3 = Dog(name: "Rhett", breed: "English Setter", mood: "excited", hungry: false)
+var dog4 = Dog(name: "Partner", breed: "Golden Retriever", mood: "thoughtful", hungry: true)
+var dog5 = Dog(name: "Rascal", breed: "Golden Retriever", mood: "feeling pawesome", hungry: true)
+print(dog5.toString())
+//prints:
+//Name: Rascal
+//Breed: Golden Retriever
+//Mood: feeling pawesome
+
+```
 
 f. Add a type property called `count` that keeps track of how many dogs have been created so far.
 
@@ -392,6 +431,19 @@ a. Make a struct called `FreezingPoint` that has three properties: `celsius`, `f
 
 
 b. Make a struct called `Celsius` that has three properties: `celsius`, `fahrenheit`, and `kelvin`. Give `celsius` a default value of `0.0`, and make the values of `fahrenheit` and `kelvin` correct values, converted from the `celsius` property.
+```swift
+struct FreezingPoint {
+var celsius: Double = 0.0
+var fahrenheit: Double = 32.0
+var kelvin: Double = 273.2
+}
+struct Celsius {
+var celsius: Int = 0
+var fahrenheit: Int = 32
+var kelvin: Double = 273.2
+
+}
+```
 
 ```swift
 var tenDegreesCelsius = Celsius(celsius: 10.0)
